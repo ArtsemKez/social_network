@@ -7,14 +7,14 @@ import store from "../../redux/redux-store";
 
 const Dialogs = (props) => {
 
-    let state = props.store.getState().dialogsPage;
+    let state = props.dialogsPage;
 
     let dialogsElements = state.dialogs.map( d => <DialogItem name={d.name} id={d.id} />  );
     let messagesElements = state.messages.map( m => <Message message={m.message} /> );
     let newMessageBody = state.newMessageBody;
 
     let onSendMessageClick = () => {
-        props.store.dispatch(sendMessageCreator());
+        props.sendMessage();
     }
 
     let onNewMessageChange = (e) => {

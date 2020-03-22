@@ -8,6 +8,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Setting from "./components/Setting/Setting";
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 
 const App = (props) => {
@@ -19,10 +20,9 @@ const App = (props) => {
             <Navbar />
             <div className="app-wrapper-content">
                 <Route path='/dialogs'
-                    render={() => <Dialogs store={props.store} />} />
+                    render={() => <DialogsContainer store={props.store} />} />
                 <Route path='/profile'
-                    render={() => <Profile profilePage={props.state.profilePage}
-                    dispatch={props.dispatch}/>} />
+                    render={() => <Profile store={props.store} />} />
                 <Route path='/music' render={Music} />
                 <Route path='/news' render={News} />
                 <Route path='/setting' render={Setting} />
