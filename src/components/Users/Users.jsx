@@ -21,8 +21,12 @@ let Users = (props) => {
                     location: {country: 'Belarus', city: 'Borisov'}
                 },
                 {
-                    id: 3, photoUrl: 'https://s1.1zoom.me/big3/436/355668-admin.jpg',
-                    followed: false, fullName: 'Artsem', status: 'I', location: {country: 'Belarus', city: 'Minsk'}
+                    id: 3,
+                    photoUrl: 'https://s1.1zoom.me/big3/436/355668-admin.jpg',
+                    followed: false,
+                    fullName: 'Artsem',
+                    status: 'I',
+                    location: {country: 'Belarus', city: 'Minsk'}
                 }
             ]
         )

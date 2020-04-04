@@ -22,15 +22,14 @@ const App = (props) => {
                     render={() => <DialogsContainer />} />
                 <Route path='/profile'
                     render={() => <Profile />} />
-                <Route path='users'
+                <Route path='/users'
                     render= {() => <UsersContainer/>} />
                 <Route path='/music' render={Music} />
                 <Route path='/news' render={News} />
                 <Route path='/setting' render={Setting} />
             </div>
         </div>
-
-    );
+    )
 }
 
 export default App;
