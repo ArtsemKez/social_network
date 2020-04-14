@@ -27,7 +27,8 @@ let Users = (props) => {
                     <div>
                         <NavLink to={'/profile/' + u.id}>
                             <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto} />
-                        </NavLink>                    </div>
+                        </NavLink>
+                    </div>
                     <div>
                         {u.followed
                             ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
