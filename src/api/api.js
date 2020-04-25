@@ -13,7 +13,7 @@ export const usersAPI = {
             .then(response => {
                 return response.data;
             })
-    },
+    }
 }
 
 export const profileAPI = {
@@ -25,3 +25,17 @@ export const profileAPI = {
     }
 }
 
+export const followedAPI = {
+    postFollow (id) {
+        return instance.post(`follow/${id}`)
+        .then(response => {
+            return response.data;
+        })
+    },
+    deleteFollow (id) {
+        return instance.delete(`follow/${id}`)
+        .then(response => {
+            return response.data;
+        })
+    }
+}

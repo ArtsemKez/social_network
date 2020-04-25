@@ -2,7 +2,7 @@ import React from 'react';
 import userPhoto from '../../assets/images/user.jpg';
 import styles from './users.module.css';
 import { NavLink } from 'react-router-dom';
-import Axios from 'axios';
+import { followedAPI } from '../../api/api';
 
 
 
@@ -23,35 +23,28 @@ let Users = (props) => {
 
         </div>
         {
-            props.users.map(u => <div key={u.id}>
+            props.users.map(users => <div key={users.id}>
                 <span>
                     <div>
-                        <NavLink to={'/profile/' + u.id}>
-                            <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto} />
+                        <NavLink to={'/profile/' + users.id}>
+                            <img src={users.photos.small != null ? users.photos.small : userPhoto} className={styles.userPhoto} />
                         </NavLink>
                     </div>
                     <div>
-                        {u.followed
+                        {users.followed
                             ? <button onClick={() => {
-                                Axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                    withCredentials: true,
-                                    headers: { "API-KEY": "0a4d5e42-bfac-4525-abce-dd128f2c8444" }
-                                })
-                                    .then(response => {
-                                        if (response.data.resultCode === 0) {
-                                            props.unfollow(u.id)
+                                followedAPI.deleteFollow(users.id)
+                                    .then(data => {
+                                        if (data.resultCode === 0) {
+                                            props.unfollow(users.id)
                                         }
                                     })
                             }}>Unfollow</button>
                             : <button onClick={() => {
-                                Axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                                    withCredentials: true,
-                                    headers: { "API-KEY": "0a4d5e42-bfac-4525-abce-dd128f2c8444" }
-
-                                })
-                                    .then(response => {
-                                        if (response.data.resultCode === 0) {
-                                            props.follow(u.id)
+                                followedAPI.postFollow(users.id)
+                                    .then(data => {
+                                        if (data.resultCode === 0) {
+                                            props.follow(users.id)
                                         }
                                     })
                             }}>Follow</button>
@@ -60,8 +53,8 @@ let Users = (props) => {
                 </span>
                 <span>
                     <span>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
+                        <div>{users.name}</div>
+                        <div>{users.status}</div>
                     </span>
                     <span>
                         <div>{"u.location.country"}</div>
