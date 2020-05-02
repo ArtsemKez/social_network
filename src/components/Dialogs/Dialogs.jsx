@@ -7,7 +7,7 @@ import store from "../../redux/redux-store";
 import { Redirect } from 'react-router-dom';
 import {Field, reduxForm} from "redux-form";
 import { Textarea } from '../../common/FormsControls/FormsControls';
-import { requaired, maxLengthCreater } from '../../utils/validators/validators';
+import { required, maxLengthCreater } from '../../utils/validators/validators';
 
 
 
@@ -50,7 +50,7 @@ const AddMessageReduxForm = (props) => {
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field component={Textarea} placeholder={"Enter your message"}name={'newMessageBody'}
-                validate={[requaired, maxLength100]} />
+                validate={[required, maxLength100]} />
             </div>
             <div>
                 <button>Send</button>

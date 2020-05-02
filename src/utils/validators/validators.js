@@ -1,4 +1,4 @@
-export const requaired = (value) => {
+export const required = (value) => {
     if(value) return undefined;
     return "Field as requaired"
 }

@@ -17,11 +17,11 @@ const FormControl = ({ input, meta, child, ...props }) => {
 
 export const Textarea = (props) => {
     const { input, meta, child, ...restProps } = props;
-    return <FormControl {...props}><textarea {...restProps} {...input} /></FormControl>
+    return <FormControl {...props}><textarea {...input} {...restProps}  /></FormControl>
 }
 
 export const Input = (props) => {
     const { input, meta, child, ...restProps } = props;
-    return <FormControl {...props}><input {...restProps} {...input} /></FormControl>
+    return <FormControl {...props}><input  {...input} {...restProps}/></FormControl>
 }
 
