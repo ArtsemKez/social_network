@@ -9,3 +9,11 @@
 {
     color: red;
 }
+
+.formSammaryError
+{
+    border: solid red 5px;
+    padding: 10px;
+    color: red;
+    width: auto;
+}

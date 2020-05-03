@@ -9,7 +9,9 @@ import { compose } from 'redux';
 class ProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.match.params.userId;
-    if(!userId){userId=6952}
+    if(!userId){
+      userId = this.props.authUserId
+    }
     this.props.getUserProfile(userId);
     
     setTimeout(()=>{
@@ -27,6 +29,8 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
   status: state.profilePage.status,
+  isAuth: state.auth.isAuth,
+  authUserId: state.auth.userId,
 })
 
 export default compose(

@@ -5,6 +5,7 @@ import { required } from '../../utils/validators/validators';
 import { connect } from 'react-redux';
 import { login } from '../../redux/auth-reducer';
 import { Redirect } from 'react-router-dom';
+import style from "../../common/FormsControls/FormsControls.module.css" 
 
 const LoginForm = (props) => {
     return <form onSubmit={props.handleSubmit} >
@@ -20,6 +21,9 @@ const LoginForm = (props) => {
         <div>
             <button>Login</button>
         </div>
+        {props.error && <div className={style.formSammaryError}>
+            {props.error}
+        </div>}
     </form>
 }
 
