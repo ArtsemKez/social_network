@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { follow, unfollow, setCurrentPage, toggleIsFololowingProgess, 
-    getUsers } from '../../redux/users-reducer';
+    requestUsers } from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../../common/Preloader/Preloader';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
+import { getUsers, getPageSize, getTotalUsersCount, getCurrentPage, 
+    getIsFetching, getFololowingProgess } from '../../redux/users-selectors'
 
 
 class UsersContainer extends React.Component {
@@ -34,18 +36,29 @@ class UsersContainer extends React.Component {
     }
 }
 
+// let mapStateToProps = (state) => {
+//     return {
+//         users: state.usersPage.users,
+//         pageSize: state.usersPage.pageSize,
+//         totalUsersCount: state.usersPage.totalUsersCount,
+//         currentPage: state.usersPage.currentPage,
+//         isFetching: state.usersPage.isFetching,
+//         fololowingProgess: state.usersPage.fololowingProgess,
+//     }
+// }
+
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        fololowingProgess: state.usersPage.fololowingProgess,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        fololowingProgess: getFololowingProgess(state),
     }
 }
 
 export default compose(
     withAuthRedirect,
-    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleIsFololowingProgess, getUsers})
+    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleIsFololowingProgess, getUsers: requestUsers})
 )(UsersContainer)
