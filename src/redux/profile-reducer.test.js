@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import profileReducer, { addPostActionCreator, deletePost } from './profile-reducer';
 
-it ('Add new post', () => {
+it ('Add posts', () => {
     //test data
     let action = addPostActionCreator('Matha facka');
     let state = {
