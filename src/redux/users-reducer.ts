@@ -125,5 +125,4 @@ export const unfollow = (userId: any) => { return async (dispatch: any) => {
     followUnfollwFlow(userId, dispatch, usersAPI.unfollow.bind(userId), unfollowSuccess);
 }}
 
-
 export default usersReducer;
