@@ -17,7 +17,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    fololowingProgess: [] as Array<number>
+    followingProgress: [] as Array<number>
 };
 
 type InitialStateType = typeof initialState
@@ -39,9 +39,9 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
         case TOGGLE_IS_FOLLOWING_PROGRESS:
             return {
                 ...state,
-                fololowingProgess: action.isFetching
-                    ? [...state.fololowingProgess, action.userId]
-                    : state.fololowingProgess.filter(id => id != action.userId)
+                followingProgress: action.isFetching
+                    ? [...state.followingProgress, action.userId]
+                    : state.followingProgress.filter(id => id != action.userId)
             }
 
         case SET_USERS:
@@ -85,7 +85,7 @@ type ToggleIsFetchingActionType = {
     type: typeof TOGGLE_IS_FETCHING
     isFetching: boolean
 }
-type ToggleIsFololowingProgessActionType = {
+type ToggleIsFollowingProgressActionType = {
     type: typeof TOGGLE_IS_FOLLOWING_PROGRESS
     isFetching: boolean
     userId: number
@@ -97,7 +97,7 @@ export const setUsers = (users: Array<UserType>): SetUsersActionType => ({ type:
 export const setCurrentPage = (currentPage: number): SetCurrentPageActionType => ({ type: SET_CURRENT_PAGE, currentPage })
 export const setTotalUsersCount = (totalUsersCount: number): SetTotalUsersCountActionType => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount })
 export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingActionType => ({ type: TOGGLE_IS_FETCHING, isFetching })
-export const toggleIsFololowingProgess = (isFetching: boolean, userId: number): ToggleIsFololowingProgessActionType => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
+export const toggleIsFollowingProgress = (isFetching: boolean, userId: number): ToggleIsFollowingProgressActionType => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 
 export const requestUsers = (page: number, pageSize: number) => { return async (dispatch: any) => {
     dispatch(toggleIsFetching(true));
@@ -109,12 +109,12 @@ export const requestUsers = (page: number, pageSize: number) => { return async (
 }}
 
 export const followUnfollwFlow = async (userId: number, dispatch: any, apiMethod: any, actionCreator: any) => {
-    dispatch(toggleIsFololowingProgess(true, userId));
+    dispatch(toggleIsFollowingProgress(true, userId));
     let Response = await apiMethod(userId);
     if (Response.data.resultCode === 0) {
         dispatch(actionCreator(userId))
     }
-    dispatch(toggleIsFololowingProgess(false, userId));
+    dispatch(toggleIsFollowingProgress(false, userId));
 }
 
 export const follow = (userId: number) => { return async (dispatch: any) => {
