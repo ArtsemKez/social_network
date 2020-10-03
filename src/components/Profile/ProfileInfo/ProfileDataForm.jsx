@@ -9,7 +9,7 @@ import style from "../../../common/FormsControls/FormsControls.module.css";
 const ProfileDataForm = ({error, handleSubmit, ...props }) => {
   return <form onSubmit={handleSubmit} >
     <div><button >Save</button></div>
-    {error && <div className={style.formSammaryError}>
+    {error && <div className={style.formSummaryError}>
             {error}
         </div>}
     <div>
