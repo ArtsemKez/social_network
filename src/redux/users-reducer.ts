@@ -1,7 +1,7 @@
 import {updateObjectInArray} from "../utils/validators/object-helpers";
 import {UserType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
-import {AppStateType, InferActionsType} from "./redux-store";
+import {AppStateType, BaseThunkType, InferActionsType} from "./redux-store";
 import {Dispatch} from "redux";
 import {usersAPI} from "../api/users-api";
 
@@ -80,7 +80,7 @@ export const actions = {
 
 
 type DispatchType = Dispatch<ActionTypes>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
+type ThunkType = BaseThunkType<ActionTypes>
 
 export const requestUsers = (page: number, pageSize: number): ThunkType => {
     return async (dispatch: any) => {
