@@ -7,6 +7,7 @@ import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
 import {reducer as formReducer} from 'redux-form'
 import appReducer from "./app-reducer";
+import {keys} from "@material-ui/core/styles/createBreakpoints";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -21,9 +22,9 @@ let rootReducer = combineReducers({
 type RootReducerType = typeof rootReducer
 export type AppStateType = ReturnType<RootReducerType>
 
-type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never
-export type InferActionsType<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesTypes<T>>
+export type InferActionsType<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
 export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>
+
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
