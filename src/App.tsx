@@ -27,6 +27,9 @@ type DispatchPropsType = {
 const SuspendedDialogs = withSuspense(DialogsContainer)
 const SuspendedUsers = withSuspense(UsersContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)
+const SuspendedMusic = withSuspense(Music)
+const SuspendedNews = withSuspense(News)
+const SuspendedSetting = withSuspense(Setting)
 
 class App extends Component<MapPropsType & DispatchPropsType> {
     captchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
@@ -61,9 +64,9 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                         render={() => <SuspendedProfile/>} />
                     <Route path='/users'
                         render={() => <SuspendedUsers/> } />
-                    <Route path='/music' render={Music} />
-                    <Route path='/news' render={News} />
-                    <Route path='/setting' render={Setting} />
+                    <Route path='/music' render={SuspendedMusic} />
+                    <Route path='/news' render={SuspendedNews} />
+                    <Route path='/setting' render={SuspendedSetting} />
                 </div>
             </div>
         )

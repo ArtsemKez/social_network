@@ -17,7 +17,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Header = (props) => {
+export type MapPropsType = {
+    isAuth: boolean
+    login: string | null
+}
+
+export type DispatchPropsType = {
+    logout: () => void
+}
+
+const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
 
     const classes = useStyles();
 
