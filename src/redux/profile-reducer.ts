@@ -1,5 +1,5 @@
 import {FormAction, stopSubmit} from "redux-form";
-import {PhotosType, PostsType, ProfileType} from "../types/types";
+import {PhotosType, PostType, ProfileType} from "../types/types";
 import {profileAPI} from "../api/profile-api";
 import {BaseThunkType, InferActionsType} from "./redux-store";
 
@@ -13,10 +13,9 @@ let initialState = {
         {id: 2, message: 'It\'s my first post', likesCount: 11},
         {id: 3, message: 'Blabla', likesCount: 11},
         {id: 4, message: 'Dada', likesCount: 11}
-    ] as Array<PostsType>,
+    ] as Array<PostType>,
     profile: null as ProfileType | null,
     status: "",
-    newPostText: ''
 };
 
 const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -29,7 +28,7 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
                 likesCount: 0
             };
             return {
-                ...state, posts: [...state.posts, newPost], newPostText: ''
+                ...state, posts: [...state.posts, newPost]
             }
         }
         case 'SN/PROFILE/SET_USERS_PROFILE': {
