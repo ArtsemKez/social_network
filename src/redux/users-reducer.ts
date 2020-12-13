@@ -89,7 +89,7 @@ export const actions = {
 }
 
 export const requestUsers = (page: number, pageSize: number, filter: FilterType): ThunkType => {
-    return async (dispatch: any) => {
+    return async (dispatch) => {
         dispatch(actions.toggleIsFetching(true));
         dispatch(actions.setCurrentPage(page));
         dispatch(actions.setFilter(filter))

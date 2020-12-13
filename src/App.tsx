@@ -13,11 +13,11 @@ import Preloader from './common/Preloader/Preloader';
 import { Provider } from 'react-redux';
 import store, { AppStateType } from "./redux/redux-store";
 import { withSuspense } from './hoc/withSuspense';
+import UserPage from './components/Users/UsersContainer';
+import { LoginPage } from './components/Login/Login';
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'))
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
-const Login = React.lazy(() => import('./components/Login/Login'))
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
@@ -25,7 +25,6 @@ type DispatchPropsType = {
 }
 
 const SuspendedDialogs = withSuspense(DialogsContainer)
-const SuspendedUsers = withSuspense(UsersContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)
 const SuspendedMusic = withSuspense(Music)
 const SuspendedNews = withSuspense(News)
@@ -57,13 +56,13 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                     <Route path='/'
                         render={ () => <Redirect to={"/profile"} />} />
                     <Route path='/login'
-                        render={withSuspense(Login)} />
+                        render={withSuspense(LoginPage)} />
                     <Route path='/dialogs'
                         render={() => <SuspendedDialogs/>} />
                     <Route path='/profile/:userId?'
                         render={() => <SuspendedProfile/>} />
                     <Route path='/users'
-                        render={() => <SuspendedUsers/> } />
+                        render={() => <UserPage pageTitle='Users' /> } />
                     <Route path='/music' render={SuspendedMusic} />
                     <Route path='/news' render={SuspendedNews} />
                     <Route path='/setting' render={SuspendedSetting} />
