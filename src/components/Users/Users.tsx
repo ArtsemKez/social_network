@@ -1,49 +1,96 @@
 import React, { useEffect } from "react";
 import Paginator from "../../common/Paginator/Paginator";
 import User from "./User";
-import UsersSearchForm from "./UsersSearchForm";
+import { UsersSearchForm } from "./UsersSearchForm";
 import { FilterType, requestUsers } from "../../redux/users-reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotalUsersCount, getCurrentPage, getPageSize, getUsersFilter, getUsers, getFollowingProgress } from "../../redux/users-selectors";
+import { useHistory } from "react-router-dom";
+import * as queryString from 'query-string'
 
-type PropsType = {
-  
-};
+
+type PropsType = {};
+type QueryParamsType = { term?: string; page?: string; friend?: string }
+
 
 export const Users: React.FC<PropsType> = (props) => {
 
-    const users = useSelector(getUsers)
-    const totalUsersCount = useSelector(getTotalUsersCount)
-    const currentPage = useSelector(getCurrentPage)
-    const pageSize = useSelector(getPageSize)
-    const filter = useSelector(getUsersFilter)
-    const followingProgress = useSelector(getFollowingProgress)
+  const users = useSelector(getUsers)
+  const totalUsersCount = useSelector(getTotalUsersCount)
+  const currentPage = useSelector(getCurrentPage)
+  const pageSize = useSelector(getPageSize)
+  const filter = useSelector(getUsersFilter)
+  const followingProgress = useSelector(getFollowingProgress)
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-    useEffect(() => {
-        dispatch(requestUsers(currentPage, pageSize, filter))
-    }, [])
 
-    const onPageChanged = (pageNumber: number) => {
-        dispatch(requestUsers(pageNumber, pageSize, filter))
+
+  useEffect(() => {
+    const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
+    debugger
+
+    let actualPage = currentPage
+    let actualFilter = filter
+
+    if (!!parsed.page) actualPage = Number(parsed.page)
+
+
+    if (!!parsed.term) actualFilter = { ...actualFilter, term: parsed.term as string }
+
+    switch (parsed.friend) {
+      case "null":
+        actualFilter = { ...actualFilter, friend: null }
+        break;
+      case "true":
+        actualFilter = { ...actualFilter, friend: true }
+        break;
+      case "false":
+        actualFilter = { ...actualFilter, friend: false }
+        break;
     }
 
-    const onFilterChange = (filter: FilterType) => {
-        dispatch(requestUsers(1, pageSize, filter))
-    }
+    dispatch(requestUsers(actualPage, pageSize, actualFilter))
+  }, [])
 
-    const follow = (userId: number) => {
-        dispatch(follow(userId))
-    }
+  useEffect(() => {
+    const query: QueryParamsType = {}
 
-    const unfollow =(userId: number) => {
-        dispatch(unfollow(userId))
-    }
+    if (!!filter.term) query.term = filter.term
+    if (filter.friend !== null) query.friend = String(filter.friend)
+    if (currentPage !== 1) query.page = String(currentPage)
+
+    history.push({
+      pathname: '/users',
+      search: queryString.stringify(query)
+    })
+    debugger
+  }, [filter, currentPage])
+
+  useEffect(() => {
+    dispatch(requestUsers(currentPage, pageSize, filter))
+  }, [])
+
+  const onPageChanged = (pageNumber: number) => {
+    dispatch(requestUsers(pageNumber, pageSize, filter))
+  }
+
+  const onFilterChange = (filter: FilterType) => {
+    dispatch(requestUsers(1, pageSize, filter))
+  }
+
+  const follow = (userId: number) => {
+    dispatch(follow(userId));
+  }
+
+  const unfollow = (userId: number) => {
+    dispatch(unfollow(userId))
+  }
 
   return (
     <div>
-      <UsersSearchForm onFilterChange={onFilterChange}/>
+      <UsersSearchForm onFilterChange={onFilterChange} />
       <Paginator
         currentPage={currentPage}
         totalItemsCount={totalUsersCount}
