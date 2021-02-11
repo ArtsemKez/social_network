@@ -29,7 +29,6 @@ export const Users: React.FC<PropsType> = (props) => {
 
   useEffect(() => {
     const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
-    debugger
 
     let actualPage = currentPage
     let actualFilter = filter
@@ -65,7 +64,6 @@ export const Users: React.FC<PropsType> = (props) => {
       pathname: '/users',
       search: queryString.stringify(query)
     })
-    debugger
   }, [filter, currentPage])
 
   useEffect(() => {

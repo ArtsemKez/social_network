@@ -1,53 +1,55 @@
+import {Avatar, Button, Col, Layout, Menu, Row} from 'antd';
+import {UserOutlined} from '@ant-design/icons';
 import React from 'react';
-import s from './Header.module.css'
 import {NavLink} from 'react-router-dom';
-import {AppBar, makeStyles, Toolbar, IconButton, Typography, Button} from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectCurrentUsersLogin, selectIsAuth} from '../../redux/auth-selectors';
+import {logout} from "../../redux/auth-reducer";
 
+export type MapPropsType = {}
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-}));
+export const Header: React.FC<MapPropsType> = (props) => {
 
-export type MapPropsType = {
-    isAuth: boolean
-    login: string | null
+    const {Header} = Layout;
+
+    const isAuth = useSelector(selectIsAuth)
+    const login = useSelector(selectCurrentUsersLogin)
+
+    const dispatch = useDispatch()
+
+    const logoutCallback = () => {
+        dispatch(logout())
+    }
+
+    return (
+        <Header className="header" style={{
+            position: 'fixed',
+            zIndex: 1,
+            width: '100%'
+        }} >
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}
+                  style={{
+                      position: 'fixed',
+                      zIndex: 1,
+                      width: '90%'
+                  }}>
+
+                <Row>
+                    <Col span={17} style={{fontSize: 25}} >
+                        SOCIAL NETWORK
+                    </Col>
+                    <Col span={2}>
+                        <Avatar size="large" icon={<UserOutlined/>}/>
+                    </Col>
+                    <Col span={5}>
+                        {isAuth ? <div style={{color: 'white'}}> {login+'    '}
+                                <Button color="inherit" onClick={logoutCallback}>Logout</Button>
+                            </div>
+                            : <Button color="inherit"><NavLink to='/login'>LOGIN</NavLink></Button>}
+                    </Col>
+                </Row>
+            </Menu>
+
+        </Header>
+    )
 }
-
-export type DispatchPropsType = {
-    logout: () => void
-}
-
-const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
-
-    const classes = useStyles();
-
-    return <div className={classes.root}>
-        <AppBar>
-            <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon/>
-                </IconButton>
-                <Typography variant="h5" className={classes.title}>
-                    Social Network
-                </Typography>
-                <div>
-                    {props.isAuth ? <div> {props.login}
-                            <Button color="inherit" onClick={props.logout}>Logaut</Button>
-                        </div>
-                        : <Button color="inherit"><NavLink to='/login'>LOGIN</NavLink></Button>}
-                </div>
-            </Toolbar>
-        </AppBar>
-    </div>
-}
-
-export default Header;
