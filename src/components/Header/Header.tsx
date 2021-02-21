@@ -3,7 +3,7 @@ import {UserOutlined} from '@ant-design/icons';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectCurrentUsersLogin, selectIsAuth} from '../../redux/auth-selectors';
+import {selectCurrentUserLogin,  selectIsAuth} from '../../redux/auth-selectors';
 import {logout} from "../../redux/auth-reducer";
 
 export type MapPropsType = {}
@@ -13,7 +13,7 @@ export const Header: React.FC<MapPropsType> = (props) => {
     const {Header} = Layout;
 
     const isAuth = useSelector(selectIsAuth)
-    const login = useSelector(selectCurrentUsersLogin)
+    const login = useSelector(selectCurrentUserLogin)
 
     const dispatch = useDispatch()
 

@@ -1,5 +1,5 @@
 import { AreaChartOutlined, MessageOutlined, SettingOutlined, SoundOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
@@ -46,6 +46,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
     componentWillMount() {
         window.removeEventListener("unhandledrejection", this.captchAllUnhandledErrors);
     }
+    
 
     render() {
         if (!this.props.initialized) {
@@ -53,7 +54,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
         }
         return (
 
-            <Layout>
+            <Layout >
                 <Header />
                 <Content style={{ padding: '50px 50px'}}>
                     <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
@@ -98,7 +99,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                         </Content>
                     </Layout>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Social Network ©2020 Created by Artsem Kez</Footer>
+                <Footer style={{textAlign: 'center' }}>Social Network ©2020 Created by Artsem Kez</Footer>
             </Layout>
         )
     }
