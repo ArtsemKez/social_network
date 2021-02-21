@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import styles from './Paginator.module.css';
-import cn from "classnames";
+import React from 'react';
+import {Pagination} from 'antd';
+import {useDispatch} from "react-redux";
+import {actions} from "../../redux/users-reducer";
 
 type PropsType = {
     totalItemsCount: number
@@ -10,30 +11,25 @@ type PropsType = {
     portionSize?: number
 }
 
-let Paginator: React.FC<PropsType> = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 20}) => {
-    let pagesCount = Math.ceil(totalItemsCount / pageSize);
+let Paginator: React.FC<PropsType> = ({totalItemsCount, pageSize, onPageChanged}) => {
 
-    let pages: Array<number> = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
+    const dispatch = useDispatch()
+
+    const showSizeChange = (currentPage: number, pageSize: number) => {
+        dispatch(actions.selectPageSize(pageSize))
+        dispatch(actions.setCurrentPage(currentPage))
     }
 
-    let portionCount = Math.ceil(pagesCount / portionSize);
-    let [portionNumber, setPortionNumber] = useState(1);
-    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    let rightPortionPageNumber = portionNumber * portionSize;
 
-    return <div className={styles.paginator}>
-        <button disabled={portionNumber === 1} onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button>
-        {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber).map((p) => {
-            return <span className={cn({
-                [styles.selectedPage]: currentPage === p},
-                styles.pageNumber)
-            }
-                key={p} onClick={(e) => { onPageChanged(p) }}>{p}</span>
-        })}
-        {portionCount > portionNumber && <button onClick={() => { setPortionNumber(portionNumber + 1) }}>NEXT</button>}
-    </div>
+
+    return (
+        <Pagination defaultCurrent={1}
+                    defaultPageSize={pageSize}
+                    total={totalItemsCount}
+                    onChange={onPageChanged}
+                    onShowSizeChange={showSizeChange}
+        />
+    )
 }
 
 export default Paginator;

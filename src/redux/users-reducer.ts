@@ -61,12 +61,16 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
         case 'SN/USERS/TOGGLE_IS_FETCHING':
             return {...state, isFetching: action.isFetching}
 
+        case 'SN/USERS/SELECT_PAGE_SIZE':
+            return  {...state, pageSize: action.pageSize}
+
         default:
             return state;
     }
 }
 
 export const actions = {
+    selectPageSize: (pageSize: number) => ({type: 'SN/USERS/SELECT_PAGE_SIZE', pageSize} as const),
     setFilter: (filter: FilterType) => ({type: 'SN/USERS/SET_FILTER', payload: filter} as const),
     followSuccess: (userId: number) => ({type: 'SN/USERS/FOLLOW', userId} as const),
     unfollowSuccess: (userId: number) => ({type: 'SN/USERS/UNFOLLOW', userId} as const),
