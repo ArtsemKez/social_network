@@ -1,8 +1,7 @@
-import { APIResponseType } from './../api/api';
+import {APIResponseType} from './../api/api';
 import {updateObjectInArray} from "../utils/validators/object-helpers";
 import {UserType} from "../types/types";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType, BaseThunkType, InferActionsType} from "./redux-store";
+import {BaseThunkType, InferActionsType} from "./redux-store";
 import {Dispatch} from "redux";
 import {usersAPI} from "../api/users-api";
 
@@ -93,6 +92,7 @@ export const actions = {
 }
 
 export const requestUsers = (page: number, pageSize: number, filter: FilterType): ThunkType => {
+    debugger
     return async (dispatch) => {
         dispatch(actions.toggleIsFetching(true));
         dispatch(actions.setCurrentPage(page));

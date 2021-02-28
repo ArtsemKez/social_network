@@ -50,7 +50,7 @@ export const Users: React.FC<PropsType> = (props) => {
         break;
     }
 
-    dispatch(requestUsers(actualPage, pageSize, actualFilter))
+    dispatch(requestUsers(actualPage = 1, pageSize, actualFilter))
   }, [])
 
   useEffect(() => {
